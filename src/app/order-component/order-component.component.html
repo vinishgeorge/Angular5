@@ -1,0 +1,55 @@
+<div class="container text-left" *ngIf="dishList.length<=0">
+  <div class="row">
+    <div class="col-sm-12">
+      <label for="oTable">Order Table</label>
+      <input type="number" id="table" name="oTable" placeholder="Table number" [(ngModel)]="oTable" />
+    </div>
+    <div class="col-sm-12">
+      <label for="oDish">Order dish</label>
+      <input type="text" id="dish" placeholder="Dish" name="oDish" [(ngModel)]="oDish" />
+    </div>
+  </div>
+
+  <blockquote class="alert alert-success text-center">
+    <p>Your order details
+      <br/> You have received order on table:{{oTable}}
+      <br/> Dish ordered is : {{oDish}}
+      <br/>
+
+    </p>
+  </blockquote>
+
+</div>
+
+<div class="container-fluid text-left">
+  <button type="button" class="btn-secondary" (click)="toggleMenu()">{{stopStart}}</button>
+  <button type="button" class="btn-secondary" (click)="setStyle()">Set Style</button>
+
+</div>
+<div *ngIf="dishList.length>0 then menuTemplate; else noMenuTemplate">
+
+</div>
+<ng-template #menuTemplate>
+  <div class="container text-left">
+    <h1>{{menuTitle}}</h1>
+    <ul class="list-group list-group-flush" >
+      <li class="list-group-item" (click)="selectDish(bDish)" *ngFor="let bDish of dishList;let i=index" appAppBold bgColor="lightgrey">{{i+1}}. {{bDish}}</li>
+    </ul>
+  </div>
+</ng-template>
+
+<ng-template #noMenuTemplate>
+  <div class="container text-left">
+    <h2>Menu is not ready yet !!</h2>
+  </div>
+</ng-template>
+
+<div [ngSwitch]="selectedDish" class="container text-left" [ngStyle]="myStyle">
+  <div *ngSwitchCase="'Garlic Bread'" >{{selectedDish}} is for Rs. {{breakfastPriceList[0]}}</div>
+  <div *ngSwitchCase="'Cheese Ommlette'" >{{selectedDish}} is for Rs. {{breakfastPriceList[1]}}</div>
+  <div *ngSwitchCase="'Chicken Burger'" >{{selectedDish}} is for Rs. {{breakfastPriceList[2]}}</div>
+  <div *ngSwitchCase="'Apple Juice'" >{{selectedDish}} is for Rs. {{breakfastPriceList[3]}}</div>
+  <div class="error" *ngSwitchDefault>Its Free !!!!!</div>
+
+<h2 [ngStyle]="myStyle" >Hope you enjoyed your meal !! Visit us again !!</h2>
+</div>
